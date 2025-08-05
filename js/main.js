@@ -185,4 +185,8 @@ btnClear.addEventListener("click", function (event) {
     // 6. Limpiar el resumen
     cont = 0;
     totalEnProductos = 0;
-    costoTotal = 0; });
+    costoTotal = 0; 
+
+    contadorProductos.innerText = cont;
+    productosTotal.innerText = totalEnProductos;
+    precioTotal.innerText = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(costoTotal);
