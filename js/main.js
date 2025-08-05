@@ -103,5 +103,19 @@ btnAgregar.addEventListener("click", function(event){
         // Precio total del resumen, tomando en cuenta la cantidad de cada producto
         costoTotal += Number(precio * txtNumber.value);
         precioTotal.innerText = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(costoTotal);
-}; 
-});
+
+        // Objeto - JSON
+        let resumen = {
+            "cont": cont,
+            "totalEnProductos": totalEnProductos,
+            "costoTotal": costoTotal
+        };
+
+        localStorage.setItem("resumen", JSON.stringify(resumen)); // Objeto que trae sus propiedades y lo convierte a cadena
+
+        txtName.value = "";
+        txtNumber.value = "";
+        txtName.focus(); // Con este automáticamente despues de limpia, regresa el cursor al campo del nombre
+    } // isValid
+
+}); // btnAgregar click
