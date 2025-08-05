@@ -67,20 +67,41 @@ btnAgregar.addEventListener("click", function(event){
         isValid = false;
     } // ! validarCantidad
 
-    if (isValid){
-        //Agregar los elementos a la tabla
+   if (isValid) {
+        // Agregar los elementos a la tabla
         cont++;
         let precio = getPrecio();
-        let row=`<tr>
-                        <td>${cont}</td>
-                        <td>${txtName.value}</td>
-                        <td>${txtNumber.value}</td>
-                        <td>${precio}</td>
+        let row = `<tr>
+                    <td>${cont}</td>
+                    <td>${txtName.value}</td>
+                    <td>${txtNumber.value}</td>
+                    <td>${precio}</td>
                 </tr>
         `;
+
+        // Establecer que datos obtendrá el objeto
+        let elemento = {
+            "cont": cont,
+            "nombre": txtName.value,
+            "cantidad": txtNumber.value,
+            "precio": precio
+        };
+
+        // Agregar los ejemplos-objetos al arreglo creado
+        datos.push(elemento);
+        localStorage.setItem("datos", JSON.stringify(datos)); // Guardar el arreglo en el localStorage
+
         cuerpoTabla.insertAdjacentHTML("beforeend", row);
-        txtName.value ="";
-        txtNumber.value = "";
-        txtName.focus();
-    }//isValid
-}); // btnAgregar click
+
+        // Conteo del "Resumen" - Por tipo de producto
+        contadorProductos.innerText = cont;
+
+        // Conteo de cantidad de productos - total
+        totalEnProductos += Number(txtNumber.value);
+        productosTotal.innerText = totalEnProductos;
+
+        // Precio total del resumen, tomando en cuenta la cantidad de cada producto
+        costoTotal += Number(precio * txtNumber.value);
+        precioTotal.innerText = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(costoTotal);
+}; 
+});
