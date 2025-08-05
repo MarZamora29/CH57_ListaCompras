@@ -190,3 +190,7 @@ btnClear.addEventListener("click", function (event) {
     contadorProductos.innerText = cont;
     productosTotal.innerText = totalEnProductos;
     precioTotal.innerText = new Intl.NumberFormat("es-MX", { style: "currency", currency: "MXN" }).format(costoTotal);
+
+    // 7. Limpiar el arreglo datos
+    datos = new Array();
+})
