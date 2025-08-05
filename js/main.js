@@ -10,6 +10,11 @@ const btnClear = document.getElementById("btnClear");
 // Declaración de las alertas
 const alertValidaciones = document.getElementById("alertValidaciones");
 const alertValidacionesTexto = document.getElementById("alertValidacionesTexto");
+// Declaración de la tabla
+const tablaListaCompras = document.getElementById("tablaListaCompras");
+const cuerpoTabla = tablaListaCompras.getElementsByTagName("tbody").item(0);
+
+let cont =0;
 
 // Number
 // Validar que sea numérico
@@ -30,13 +35,13 @@ function validarCantidad(){
 } // ValidarCantidad
 
 function getPrecio(){
-return Math.round(Math.random() * 10000)/100;
+return (Math.round(Math.random() * 5000)/100);
 }//getPrecio
 
 // click del botón
 btnAgregar.addEventListener("click", function(event){
     event.preventDefault();
-    
+    let isValid = true;
     // Para limpiar alertas
     alertValidacionesTexto.innerHTML = "";
     alertValidaciones.style.display = "none";
@@ -51,7 +56,7 @@ btnAgregar.addEventListener("click", function(event){
         txtName.style.border = "medium red solid";
         alertValidacionesTexto.innerHTML = "<strong>Por favor ingresa un nombre de producto válido</strong><br>";
         alertValidaciones.style.display = "block";
-    } // Menor que 3
+    } // Menor que 3 <3
     
     // Number
     if(! validarCantidad()){
@@ -59,7 +64,23 @@ btnAgregar.addEventListener("click", function(event){
         txtNumber.style.border = "medium red solid";
         alertValidacionesTexto.innerHTML += "<strong>Proporciona la cantidad correcta</strong>";
         alertValidaciones.style.display = "block";
+        isValid = false;
     } // ! validarCantidad
 
-
-}); // btnAgregar
+    if (isValid){
+        //Agregar los elementos a la tabla
+        cont++;
+        let precio = getPrecio();
+        let row=`<tr>
+                        <td>${cont}</td>
+                        <td>${txtName.value}</td>
+                        <td>${txtNumber.value}</td>
+                        <td>${precio}</td>
+                </tr>
+        `;
+        cuerpoTabla.insertAdjacentHTML("beforeend", row);
+        txtName.value ="";
+        txtNumber.value = "";
+        txtName.focus();
+    }//isValid
+}); // btnAgregar click
