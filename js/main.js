@@ -10,38 +10,49 @@ const btnClear = document.getElementById("btnClear");
 // Declaración de las alertas
 const alertValidaciones = document.getElementById("alertValidaciones");
 const alertValidacionesTexto = document.getElementById("alertValidacionesTexto");
-// Declaración de la tabla
+
 const tablaListaCompras = document.getElementById("tablaListaCompras");
 const cuerpoTabla = tablaListaCompras.getElementsByTagName("tbody").item(0);
 
-let cont =0;
+const contadorProductos = document.getElementById("contadorProductos");
+const productosTotal = document.getElementById("productosTotal");
+const precioTotal = document.getElementById("precioTotal");
+
+// Contador
+let cont = 0;
+let costoTotal = 0;
+let totalEnProductos = 0;
+
+// Inicializar Arreglo para guardar los objetos que se vayan agregando a la lista
+let datos = new Array(); //[];
 
 // Number
 // Validar que sea numérico
-function validarCantidad(){
-    if(txtNumber.value.length == 0){
+function validarCantidad() {
+    if (txtNumber.value.length == 0) {
         return false;
     } // Tenga info
 
-    if(isNaN(txtNumber.value)){
+    if (isNaN(txtNumber.value)) {
         return false;
     } // Tiene que ser un número
 
-    if(Number(txtNumber.value)<=0){
+    if (Number(txtNumber.value) <= 0) {
         return false;
     }// Mayor que 0
 
     return true;
 } // ValidarCantidad
 
-function getPrecio(){
-return (Math.round(Math.random() * 5000)/100);
-}//getPrecio
+function getPrecio() {
+    return Math.round(Math.random() * 10000) / 100;
+} // getPrecio
+
 
 // click del botón
-btnAgregar.addEventListener("click", function(event){
+btnAgregar.addEventListener("click", function (event) {
     event.preventDefault();
-    let isValid = true;
+    let isValid = true; // Bandera
     // Para limpiar alertas
     alertValidacionesTexto.innerHTML = "";
     alertValidaciones.style.display = "none";
@@ -51,23 +62,24 @@ btnAgregar.addEventListener("click", function(event){
 
     // Name
     // Validar que tenga información mínimo 3 letras
-    if(txtName.value.length < 3){
+    if (txtName.value.length < 3) {
         // Mensaje de error
         txtName.style.border = "medium red solid";
         alertValidacionesTexto.innerHTML = "<strong>Por favor ingresa un nombre de producto válido</strong><br>";
         alertValidaciones.style.display = "block";
-    } // Menor que 3 <3
-    
+        isValid = false; // Bandera
+    } // Menor que 3
+
     // Number
-    if(! validarCantidad()){
+    if (!validarCantidad()) {
         // Mensaje de error
         txtNumber.style.border = "medium red solid";
         alertValidacionesTexto.innerHTML += "<strong>Proporciona la cantidad correcta</strong>";
         alertValidaciones.style.display = "block";
-        isValid = false;
+        isValid = false; // Bandera
     } // ! validarCantidad
 
-   if (isValid) {
+    if (isValid) {
         // Agregar los elementos a la tabla
         cont++;
         let precio = getPrecio();
@@ -119,7 +131,7 @@ btnAgregar.addEventListener("click", function(event){
     } // isValid
 
 }); // btnAgregar click
-//------------------------------------------------------------------------------------->
+
 
 // Al darle refresh aparecerá esto = se guardará la información 
 window.addEventListener("load", function (event) {
@@ -185,7 +197,7 @@ btnClear.addEventListener("click", function (event) {
     // 6. Limpiar el resumen
     cont = 0;
     totalEnProductos = 0;
-    costoTotal = 0; 
+    costoTotal = 0;
 
     contadorProductos.innerText = cont;
     productosTotal.innerText = totalEnProductos;
